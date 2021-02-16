@@ -21,15 +21,21 @@ function App() {
     const dateBuilder = (date) => {
         let currentDate = String(date)
         let day = currentDate.slice(3, 15)
+        let pm = true
         let hour = (hr) => {
+            if (hr > 12) {
+                pm = true
+            } else {
+                pm = false
+            }
             return hr > 12 ? hr - 12 : hr
         }
         let time = hour(parseFloat(currentDate.slice(16, 19))) + ":" + currentDate.slice(19, 21)
-        return `${day} at ${time}` //day + " at " + time
+        return `${day} at ${time} ${pm ? "PM" : "AM"}` //day + " at " + time
     }
 
     return (
-        <div className='app'>
+        <div className={typeof weather.main != "undefined" ? (weather.main.temp > 14 ? "app warm" : "app") : "app"}>
             <main>
                 <div className='search-box'>
                     <input
